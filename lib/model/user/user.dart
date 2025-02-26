@@ -16,5 +16,5 @@ class User {
       required this.email,
       required this.phone,
       required this.profilePicture,
-      required this.verifiedProfile});
+      required this.verifiedProfile, required int id, required String name});
 }

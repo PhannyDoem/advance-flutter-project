@@ -1,16 +1,11 @@
 
 
 import 'package:advanceprojectflutter/model/ride/locations.dart';
+import 'package:advanceprojectflutter/model/enums/rideStatus.dart';
 
 import '../../utils/date_time_util.dart';
 import '../user/user.dart';
 
-enum RideStatus {
-  created,
-  published,
-  ongoing,
-  finished;
-}
 
 ///
 /// This model describes a  Ride.

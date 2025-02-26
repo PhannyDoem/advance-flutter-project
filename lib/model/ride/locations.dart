@@ -1,15 +1,8 @@
+import 'package:advanceprojectflutter/model/enums/country.dart';
+
 ///
 /// Enumation of available BlaBlaCar countries
 ///
-enum Country {
-  france('France'),
-  uk('United Kingdom'),
-  spain('Spain');
-
-  final String name;
-
-  const Country(this.name);
-}
 
 ///
 /// This model describes a location (city, street).
@@ -38,9 +31,4 @@ class Location {
 ///
 /// This model describes a street.
 ///
-class Street {
-  final String name;
-  final Location city;
 
-  const Street({required this.name, required this.city});
-}
