@@ -105,7 +105,7 @@ List<User> fakeUsers = [
     email: "alice.dupont@example.com",
     phone: "+33 612345678",
     profilePicture: "https://randomuser.me/api/portraits/women/1.jpg",
-    verifiedProfile: true, id: 1, name: 'Alice Dupont',
+    verifiedProfile: true,
   ),
   User(
     firstName: "Bob",
@@ -114,7 +114,6 @@ List<User> fakeUsers = [
     phone: "+44 789456123",
     profilePicture: "https://randomuser.me/api/portraits/men/2.jpg",
     verifiedProfile: false,
-    id: 2, name: 'Bob Smith',
   ),
   User(
     firstName: "Charlie",
@@ -123,7 +122,6 @@ List<User> fakeUsers = [
     phone: "+33 674839201",
     profilePicture: "https://randomuser.me/api/portraits/men/3.jpg",
     verifiedProfile: true,
-    id: 3, name: 'Charlie Martin',
   ),
   User(
     firstName: "Diane",
@@ -132,7 +130,6 @@ List<User> fakeUsers = [
     phone: "+44 741258963",
     profilePicture: "https://randomuser.me/api/portraits/women/4.jpg",
     verifiedProfile: true,
-    id: 4, name: 'Diane Lemoine',
   ),
   User(
     firstName: "Ethan",
@@ -141,7 +138,6 @@ List<User> fakeUsers = [
     phone: "+44 785412369",
     profilePicture: "https://randomuser.me/api/portraits/men/5.jpg",
     verifiedProfile: false,
-    id: 5, name: 'Ethan Brown',
   ),
   User(
     firstName: "Fanny",
@@ -150,7 +146,6 @@ List<User> fakeUsers = [
     phone: "+33 675839201",
     profilePicture: "https://randomuser.me/api/portraits/women/6.jpg",
     verifiedProfile: true,
-    id: 6, name: 'Fanny Durand',
   ),
 ];
 

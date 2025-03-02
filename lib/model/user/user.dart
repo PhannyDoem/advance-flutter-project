@@ -10,11 +10,12 @@ class User {
 
   final bool verifiedProfile;
 
-  User(
-      {required this.firstName,
-      required this.lastName,
-      required this.email,
-      required this.phone,
-      required this.profilePicture,
-      required this.verifiedProfile, required int id, required String name});
+  User({
+    required this.firstName,
+    required this.lastName,
+    required this.email,
+    required this.phone,
+    required this.profilePicture,
+    required this.verifiedProfile,
+  });
 }
