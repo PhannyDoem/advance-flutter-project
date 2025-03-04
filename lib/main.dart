@@ -1,4 +1,3 @@
-import 'package:advanceprojectflutter/model/ride_pref/ride_pref.dart';
 import 'package:flutter/material.dart';
 import 'screens/ride_pref/ride_pref_screen.dart';
 import 'theme/theme.dart';
