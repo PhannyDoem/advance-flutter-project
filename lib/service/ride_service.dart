@@ -9,7 +9,7 @@ import '../model/ride/ride.dart';
 ///   This service handles:
 ///   - The list of available rides
 ///
-class RidesService {
+class RideService {
 
   static List<Ride> availableRides = fakeRides;   // TODO for now fake data
 

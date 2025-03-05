@@ -1,4 +1,6 @@
 import 'package:advanceprojectflutter/screens/location_picker_screen.dart';
+import 'package:advanceprojectflutter/service/location_service.dart';
+import 'package:advanceprojectflutter/service/repository/location_repository.dart';
 import 'package:advanceprojectflutter/theme/theme.dart';
 import 'package:advanceprojectflutter/utils/animations_util.dart';
 import 'package:advanceprojectflutter/utils/date_time_util.dart';
@@ -52,7 +54,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
   Future<void> onDepartureTap() async {
     final newDepartureLocation = await Navigator.of(context).push<Location>(
       AnimationUtils.createBottomToTopRoute(
-        LocationPickerScreen(initLocation: departure),
+        LocationPickerScreen(initLocation: departure, service: LocationService('' as LocationRepository),),
       ),
     );
 
@@ -66,7 +68,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
   Future<void> onArrivalTap() async {
     final newArrivalLocation = await Navigator.of(context).push<Location>(
       AnimationUtils.createBottomToTopRoute(
-        LocationPickerScreen(initLocation: arrival),
+        LocationPickerScreen(initLocation: arrival, service: LocationService(MyConcreteLocationRepository() as LocationRepository),),
       ),
     );
 
@@ -221,4 +223,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
       ],
     );
   }
+}
+
+class MyConcreteLocationRepository {
 }

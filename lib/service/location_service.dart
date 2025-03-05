@@ -7,15 +7,17 @@ import '../dummy_data/dummy_data.dart';
 ///   This service handles:
 ///   - The list of available rides
 ///
-class LocationsService {
+class LocationService {
   static const List<Location> availableLocations = fakeLocations;
   // TODO for now fake data
 
   final LocationRepository repository;
 
-  LocationsService(this.repository);
+  LocationService(this.repository);
 
   List<Location> getLocations() {
     return repository.getLocations();
   }
+
+
 }

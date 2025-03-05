@@ -1,7 +1,7 @@
 import 'package:advanceprojectflutter/model/ride/ride.dart';
 import 'package:advanceprojectflutter/model/ride_pref/ride_pref.dart';
 import 'package:advanceprojectflutter/screens/ride_tile.dart';
-import 'package:advanceprojectflutter/service/rides_service.dart';
+import 'package:advanceprojectflutter/service/ride_service.dart';
 import 'package:advanceprojectflutter/theme/theme.dart';
 import 'package:advanceprojectflutter/utils/date_time_util.dart';
 import 'package:advanceprojectflutter/widgets/inputs/bla_button.dart';
@@ -35,7 +35,7 @@ class _RideScreenState extends State<RideScreen> {
   }
 
   void findRides() {
-    foundRides = RidesService.getRidesFor(ridePref);
+    foundRides = RideService.getRidesFor(ridePref);
     debugPrint(foundRides.toString());
   }
 

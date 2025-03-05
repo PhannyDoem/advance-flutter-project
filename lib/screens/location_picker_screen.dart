@@ -1,158 +1,128 @@
 import 'package:advanceprojectflutter/model/ride/locations.dart';
-import 'package:advanceprojectflutter/service/locations_service.dart';
+import 'package:advanceprojectflutter/service/location_service.dart';
 import 'package:advanceprojectflutter/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 
 class LocationPickerScreen extends StatefulWidget {
+  final LocationService service;
+  final Location? initLocation;
+
   const LocationPickerScreen({
     super.key,
-    this.initLocation, // Optional initial location passed to the widget
+    required this.service,
+    this.initLocation,
   });
-
-  final Location?
-      initLocation; // Represents the starting location for the picker
 
   @override
   State<LocationPickerScreen> createState() => _LocationPickerScreenState();
 }
 
 class _LocationPickerScreenState extends State<LocationPickerScreen> {
-  Location? selectedLocation; // Tracks the currently selected location
-  List<Location> filteredLocations =
-      []; // Stores locations filtered by search input
+  Location? selectedLocation;
+  List<Location> filteredLocations = [];
+  final TextEditingController searchController = TextEditingController();
+  final FocusNode searchFocusNode = FocusNode();
 
-  final TextEditingController searchController =
-      TextEditingController(); // Controller for the search bar
-  final FocusNode searchFocusNode =
-      FocusNode(); // Focus node for managing keyboard focus
-
-  bool get hasSearchInput =>
-      searchController.text.isNotEmpty; // Checks if the search bar has any text
+  bool get hasSearchInput => searchController.text.isNotEmpty;
 
   @override
   void initState() {
     super.initState();
-    selectedLocation = widget
-        .initLocation; // Initialize the selected location with the provided value
-    performSearch(
-        ''); // Perform an initial search to populate the list with all available locations
+    selectedLocation = widget.initLocation;
+    performSearch('');
   }
 
-  // Handles tapping on a location item
   void handleLocationTap(Location tappedLocation) {
-    Navigator.of(context).pop(
-        tappedLocation); // Return the selected location to the previous screen
+    Navigator.of(context).pop(tappedLocation);
   }
 
-  // Handles the back button press
   void handleBackPress() {
-    Navigator.of(context)
-        .pop(); // Close the screen and return to the previous screen
+    Navigator.of(context).pop();
   }
 
-  // Clears the search bar and resets the focus
   void clearSearchBar() {
-    searchController.clear(); // Clear the text in the search bar
-    searchFocusNode.requestFocus(); // Refocus the search bar
-    performSearch(
-        ''); // Reset the location list to show all available locations
+    searchController.clear();
+    searchFocusNode.requestFocus();
+    performSearch('');
   }
 
-  // Filters the list of locations based on the search input
   void performSearch(String query) {
     setState(() {
-      filteredLocations = LocationsService.availableLocations
+      filteredLocations = widget.service
+          .getLocations()
           .where((location) =>
               location.name.toLowerCase().contains(query.toLowerCase()))
-          .toList(); // Filter locations by matching the query (case-insensitive)
+          .toList();
     });
   }
 
-  // Builds the search bar UI
   Widget buildSearchBar(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color:
-            BlaColors.backgroundAccent, // Background color for the search bar
-        borderRadius: BorderRadius.circular(BlaSpacings.s), // Rounded corners
+        color: BlaColors.backgroundAccent,
+        borderRadius: BorderRadius.circular(BlaSpacings.s),
       ),
       child: Row(
         children: [
-          // Back button
           Padding(
             padding: EdgeInsets.symmetric(horizontal: BlaSpacings.s),
             child: IconButton(
-              onPressed: handleBackPress, // Navigate back when pressed
+              onPressed: handleBackPress,
               icon: Icon(
                 Icons.arrow_back_rounded,
-                color: BlaColors.iconNormal, // Icon color
+                color: BlaColors.iconNormal,
               ),
             ),
           ),
-          // Search input field
           Expanded(
             child: TextField(
-              controller: searchController, // Controller for managing the input
-              focusNode: searchFocusNode, // Focus node for managing focus
-              onChanged:
-                  performSearch, // Trigger a search whenever the input changes
+              controller: searchController,
+              focusNode: searchFocusNode,
+              onChanged: performSearch,
               style: TextStyle(
-                color: BlaColors.textNormal, // Text color
+                color: BlaColors.textNormal,
               ),
               decoration: InputDecoration(
-                hintText: 'Search for a location...', // Placeholder text
-                border: InputBorder.none, // No border for the text field
-                filled: false, // Do not fill the background
+                hintText: 'Search for a location...',
+                border: InputBorder.none,
+                filled: false,
               ),
             ),
           ),
-          // Clear button (visible only when there is input)
           if (hasSearchInput)
             IconButton(
-              onPressed: clearSearchBar, // Clear the search bar when pressed
-              icon: Icon(Icons.close_rounded,
-                  color: BlaColors.iconNormal), // Clear icon
+              onPressed: clearSearchBar,
+              icon: Icon(Icons.close_rounded, color: BlaColors.iconNormal),
             ),
         ],
       ),
     );
   }
 
-  // Builds a single location tile
   Widget buildLocationTile(BuildContext context,
       {required Location location, required VoidCallback onTap}) {
     return InkWell(
-      splashColor: Colors.transparent, // Disable splash effect
-      onTap: onTap, // Handle tap events
+      splashColor: Colors.transparent,
+      onTap: onTap,
       child: Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: BlaSpacings.m), // Horizontal padding
+        padding: EdgeInsets.symmetric(horizontal: BlaSpacings.m),
         child: Row(
           children: [
-            // Optional left icon (not used in this example)
-            if (false) // Disabled for now
-              // ignore: dead_code
-              Icon(
-                Icons.location_on, // Example icon
-                color: BlaColors.neutral, // Icon color
-              ),
-            // Location name
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    location.name, // Display the location name
-                    style: TextStyle(fontWeight: FontWeight.bold), // Bold text
+                    location.name,
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
             ),
-            // Right arrow icon
             Icon(
-              Icons.arrow_forward_ios_rounded, // Arrow icon
-              color: BlaColors.neutral, // Icon color
+              Icons.arrow_forward_ios_rounded,
+              color: BlaColors.neutral,
             ),
           ],
         ),
@@ -166,22 +136,17 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            buildSearchBar(context), // Search bar at the top
-            if (filteredLocations
-                .isNotEmpty) // Show the list only if there are results
+            buildSearchBar(context),
+            if (filteredLocations.isNotEmpty)
               Expanded(
                 child: ListView.builder(
-                  shrinkWrap: true, // Allow the list to shrink-wrap its content
-                  physics:
-                      AlwaysScrollableScrollPhysics(), // Ensure the list is always scrollable
-                  itemCount:
-                      filteredLocations.length, // Number of items in the list
+                  shrinkWrap: true,
+                  physics: AlwaysScrollableScrollPhysics(),
+                  itemCount: filteredLocations.length,
                   itemBuilder: (ctx, index) => buildLocationTile(
                     context,
-                    location:
-                        filteredLocations[index], // Pass the location data
-                    onTap: () => handleLocationTap(
-                        filteredLocations[index]), // Handle tap events
+                    location: filteredLocations[index],
+                    onTap: () => handleLocationTap(filteredLocations[index]),
                   ),
                 ),
               ),
